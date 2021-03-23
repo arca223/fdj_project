@@ -1,7 +1,35 @@
 {% extends 'home/home_layout.html.twig' %}
 
 {% block body %}
+    <div class="container mx-auto mt-10">
+        <div class="flex justify-start">
+            <div class="w-96 mr-10"><img src="/img/euromillion.png" alt="Euromillions Image"/> </div>
+            <div class="w-320 mr-10">
+                <div class="text-4xl">Tirage du {{ draw.drawnAt | date('l d F, Y') }}</div>
+                <div class="text-gray-400 font-light"> Résultats Euromillions - My Million</div>
+                <br/>
+                <br/>
+                <div class="flex justify-start ml-10">
+                    {% for ball in draw.balls %}
+                        {% if ball.getType() == 'number' %}
+                            <div class="mr-5 w-12 h-12 flex
+                                bg-blue-900 rounded-full">
+                                <span class="text-white m-auto">{{ ball.value }}</span>
+                            </div>
+                        {% else %}
+                            <div class="mr-5 w-12 h-12 flex
+                                bg-yellow-300 rounded-full">
+                                <span class="text-white m-auto">{{ ball.value }}</span>
+                            </div>
+                        {% endif %}
 
-    <p class="mb-10 sm:ml-2 md:ml-5 lg:ml-10 xl:ml-20">My Cool Draw</p>
-    <p class="text-4xl text-center p-5">Winning!</p>
+
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="w-72 mr-10 place-content-end rounded-3xl border-blue-400">
+                <span class="text-blue-900 text-light">My Million</span><span>EJ 459 7231</span>
+            </div>
+        </div>
+    </div>
 {% endblock %}

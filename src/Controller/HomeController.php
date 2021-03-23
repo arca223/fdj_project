@@ -25,7 +25,9 @@ class HomeController extends AbstractController
      */
     public function __invoke(): Response
     {
+        // Set Locale to French until translated
         $draw = $this->drawManager->getDraw();
+
         return $this->render('home/home.html.twig', [
             'draw' => $draw
         ]);

@@ -70,11 +70,34 @@ class Draw
     }
 
     /**
-     * @param string $name
-     * @return mixed
+     * @return int
      */
-    public function __get(string $name)
+    public function getId(): int
     {
-        return $this->$name;
+        return $this->id;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDrawnAt(): \DateTime
+    {
+        return $this->drawnAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPublished(): int
+    {
+        return $this->published;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getBalls(): ArrayCollection
+    {
+        return $this->balls;
     }
 }

@@ -53,12 +53,34 @@ abstract class Ball
     }
 
     /**
-     * @param string $name
-     * @return mixed
+     * @return int
      */
-    public function __get(string $name)
+    public function getId(): int
     {
-        return $this->$name;
+        return $this->id;
     }
 
+    /**
+     * @return int
+     */
+    public function getValue(): int
+    {
+        return $this->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEsteLotery(): string
+    {
+        return $this->esteLotery;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDrawIndex(): int
+    {
+        return $this->drawIndex;
+    }
 }
