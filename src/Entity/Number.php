@@ -6,5 +6,4 @@ use App\Entity\Ball;
 
 class Number extends Ball
 {
-
 }

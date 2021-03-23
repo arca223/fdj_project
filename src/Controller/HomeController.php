@@ -25,6 +25,9 @@ class HomeController extends AbstractController
      */
     public function __invoke(): Response
     {
-        return $this->render('home/home.html.twig');
+        $draw = $this->drawManager->getDraw();
+        return $this->render('home/home.html.twig', [
+            'draw' => $draw
+        ]);
     }
 }
