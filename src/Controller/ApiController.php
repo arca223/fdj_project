@@ -25,6 +25,6 @@ class ApiController
      */
     public function __invoke()
     {
-        return new JsonResponse($this->drawManager->getDrawApi());
+        return new JsonResponse($this->drawManager->getDrawApi()->getContent());
     }
 }

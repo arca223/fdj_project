@@ -2,15 +2,10 @@
 
 namespace App\Manager;
 
-use App\Entity\Ball;
 use App\Entity\Draw;
 use App\Factory\BallFactory;
-use App\Model\DrawModel;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class DrawManager
 {
@@ -36,11 +31,11 @@ class DrawManager
     }
 
     /**
-     *
+     * @return ResponseInterface
      */
-    public function getDrawApi()
+    public function getDrawApi(): ResponseInterface
     {
-        return $this->httpClient->request('GET', self::DRAW_URL)->getContent();
+        return $this->httpClient->request('GET', self::DRAW_URL);
     }
 
     /**
@@ -48,8 +43,7 @@ class DrawManager
      */
     public function getDraw(): Draw
     {
-        $drawApiJson = $this->getDrawApi();
-        return $this->manageDrawData($drawApiJson);
+        return $this->manageDrawData($this->getDrawApi()->getContent());
     }
 
     /**
