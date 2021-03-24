@@ -6,7 +6,6 @@ use App\Manager\DrawManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class HomeController extends AbstractController
 {
@@ -25,8 +24,11 @@ class HomeController extends AbstractController
      */
     public function __invoke(): Response
     {
-        // Set Locale to French until translated
-        $draw = $this->drawManager->getDraw();
+        //TODO: Set the date as a parameter, default value with today
+
+        //Setting date to 02-05 to match the requested data of the exercice
+        $date = new \DateTime('2021-02-05');
+        $draw = $this->drawManager->getDraw($date);
 
         return $this->render('home/home.html.twig', [
             'draw' => $draw

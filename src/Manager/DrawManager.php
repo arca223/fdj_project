@@ -27,23 +27,26 @@ class DrawManager
     {
         $this->httpClient = $httpClient;
         $this->ballFactory = $ballFactory;
-
     }
 
     /**
+     * @param \DateTime|null $date
      * @return ResponseInterface
      */
-    public function getDrawApi(): ResponseInterface
+    public function getDrawApi(\DateTime $date = null): ResponseInterface
     {
-        return $this->httpClient->request('GET', self::DRAW_URL);
+        $url = $date ? self::DRAW_URL . '&drawn_at=' . $date->format('Y-m-d') : self::DRAW_URL;
+
+        return $this->httpClient->request('GET', $url);
     }
 
     /**
+     * @param \DateTime|null $date
      * @return Draw
      */
-    public function getDraw(): Draw
+    public function getDraw(\DateTime $date = null): Draw
     {
-        return $this->manageDrawData($this->getDrawApi()->getContent());
+        return $this->manageDrawData($this->getDrawApi($date)->getContent());
     }
 
     /**
@@ -53,20 +56,16 @@ class DrawManager
     private function manageDrawData($drawApiJson): Draw
     {
         //TODO: unserialize into object
-        //TODO: get a way to fetch a specific draw or render all draws by date
-        $drawData = json_decode($drawApiJson, true);
 
-        // Filter the date we want and get the first result of the array returned
-        $drawTarget = current(array_filter($drawData, function($data) {
-            return $data['drawn_at'] = "2021-03-19T21:30:00+01:00";
-        }));
+        // Fetch the first object, api returned json is formatted this way
+        $drawData = json_decode($drawApiJson, true)[0];
 
         $draw = (new Draw())
-            ->setId($drawTarget['eid'])
-            ->setDrawnAt(new \DateTime($drawTarget['drawn_at']))
-            ->setPublished($drawTarget['published']);
+            ->setId($drawData['eid'])
+            ->setDrawnAt(new \DateTime($drawData['drawn_at']))
+            ->setPublished($drawData['published']);
 
-        foreach ($drawTarget['results'] as $result) {
+        foreach ($drawData['results'] as $result) {
              $draw->addBall($this->ballFactory->createBall($result));
         }
 
