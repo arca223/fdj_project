@@ -10,7 +10,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 class DrawManager
 {
     //TODO : Put in env file for security
-    const DRAW_URL = "https://www.fdj.fr/api/service-draws/v1/games/euromillions/draws?include=results&range=0-0";
+    private const DRAW_URL = "https://www.fdj.fr/api/service-draws/v1/games/euromillions/draws?include=results&range=0-0";
 
     /** @var HttpClientInterface */
     private $httpClient;

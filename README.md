@@ -14,4 +14,6 @@ Then start the project with
 
 - Build the frontend
 
+```npm install```
+
 ```yarn encore dev```

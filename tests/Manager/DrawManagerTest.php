@@ -7,18 +7,17 @@ use App\Factory\BallFactory;
 use App\Manager\DrawManager;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\CurlHttpClient;
-use Symfony\Component\HttpClient\MockHttpClient;
 
 class DrawManagerTest extends TestCase
 {
-    public function testGetDrawApi()
+    public function testGetDrawApi(): void
     {
         $response = (new DrawManager(new CurlHttpClient(), new BallFactory()))->getDrawApi();
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testGetDrawOfFifthOfFebruary()
+    public function testGetDrawOfFifthOfFebruary(): void
     {
         $date = new \DateTime('2021-02-05T21:30', new \DateTimeZone('Europe/Paris'));
 
@@ -33,7 +32,7 @@ class DrawManagerTest extends TestCase
         $this->assertCount(7, $draw->getBalls());
     }
 
-    public function testGetDrawOfToday()
+    public function testGetDrawOfToday(): void
     {
         $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
         // Check if time > 21:30, if so, today's draft is released, otherwise it'll be yesterday

@@ -15,6 +15,7 @@ class ApiController
 {
     /** @var DrawManager */
     private $drawManager;
+
     public function __construct(DrawManager $drawManager)
     {
         $this->drawManager = $drawManager;
@@ -22,8 +23,9 @@ class ApiController
 
     /**
      * @Route("/draw")
+     * @return JsonResponse
      */
-    public function __invoke()
+    public function __invoke(): JsonResponse
     {
         return new JsonResponse($this->drawManager->getDrawApi()->getContent());
     }

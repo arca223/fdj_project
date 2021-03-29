@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class BallFactoryTest extends TestCase
 {
-    public function testCreateBall()
+    public function testCreateBall(): void
     {
         $factory = new BallFactory();
 

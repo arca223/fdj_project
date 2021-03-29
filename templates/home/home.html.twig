@@ -13,12 +13,12 @@
                 <br/>
                 <div class="flex justify-start ml-3 md:ml-10">
                     {% for ball in draw.balls %}
-                            <div class="mr-2 xl:mr-5 w-12 h-12 flex
+                            <div class="flex mr-2 xl:mr-5 w-12 h-12 rounded-full
                                 {% if ball.getType() == 'number' %}
                                     bg-blue-900
                                 {% else %}
                                     bg-yellow-300
-                                {% endif %} rounded-full">
+                                {% endif %}">
                                 <span class="text-white m-auto">{{ ball.value }}</span>
                             </div>
                     {% endfor %}
