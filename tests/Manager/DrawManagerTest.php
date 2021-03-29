@@ -13,8 +13,12 @@ class DrawManagerTest extends TestCase
     public function testGetDrawApi(): void
     {
         $response = (new DrawManager(new CurlHttpClient(), new BallFactory()))->getDrawApi();
+        //getting first index, the json is formatted this way
+        $content = json_decode($response->getContent(), true)[0];
 
         $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('results', $content);
+        $this->assertArrayHasKey('addons', $content);
     }
 
     public function testGetDrawOfFifthOfFebruary(): void
@@ -22,25 +26,6 @@ class DrawManagerTest extends TestCase
         $date = new \DateTime('2021-02-05T21:30', new \DateTimeZone('Europe/Paris'));
 
         $draw = (new DrawManager(new CurlHttpClient(), new BallFactory()))->getDraw($date);
-
-        $this->assertIsObject($draw);
-        $this->assertInstanceOf(Draw::class, $draw);
-        $this->assertObjectHasAttribute('id', $draw);
-        $this->assertObjectHasAttribute('drawnAt', $draw);
-        $this->assertEquals($date, $draw->getDrawnAt());
-        $this->assertObjectHasAttribute('balls', $draw);
-        $this->assertCount(7, $draw->getBalls());
-    }
-
-    public function testGetDrawOfToday(): void
-    {
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        // Check if time > 21:30, if so, today's draft is released, otherwise it'll be yesterday
-        $testDate = (new \DateTime('now'))->setTime(21, 30);
-        if ($date < $testDate) {
-            $date->sub(new \DateInterval('P1D'))->setTime(21, 30);
-        }
-        $draw = (new DrawManager(new CurlHttpClient(), new BallFactory()))->getDraw();
 
         $this->assertIsObject($draw);
         $this->assertInstanceOf(Draw::class, $draw);

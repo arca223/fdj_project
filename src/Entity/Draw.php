@@ -18,6 +18,9 @@ class Draw
     /** @var ArrayCollection */
     private $balls;
 
+    /** @var string */
+    private $addonValue;
+
     /**
      * Draw constructor.
      */
@@ -56,9 +59,10 @@ class Draw
     /**
      * @param ArrayCollection $balls
      */
-    public function setBalls(ArrayCollection $balls)
+    public function setBalls(ArrayCollection $balls): self
     {
         $this->balls = $balls;
+        return $this;
     }
 
     /**
@@ -67,6 +71,16 @@ class Draw
     public function addBall(Ball $ball): void
     {
         $this->balls->add($ball);
+    }
+
+    /**
+     * @param string $addValue
+     * @return $this
+     */
+    public function setAddonValue(string $addonValue): self
+    {
+        $this->addonValue = $addonValue;
+        return $this;
     }
 
     /**
@@ -99,5 +113,13 @@ class Draw
     public function getBalls(): ArrayCollection
     {
         return $this->balls;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddonValue(): string
+    {
+        return $this->addonValue;
     }
 }

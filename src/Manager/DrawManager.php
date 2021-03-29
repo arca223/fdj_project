@@ -10,7 +10,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 class DrawManager
 {
     //TODO : Put in env file for security
-    private const DRAW_URL = "https://www.fdj.fr/api/service-draws/v1/games/euromillions/draws?include=results&range=0-0";
+    private const DRAW_URL = "https://www.fdj.fr/api/service-draws/v1/games/euromillions/draws?include=results,addons&range=0-0";
 
     /** @var HttpClientInterface */
     private $httpClient;
@@ -63,7 +63,8 @@ class DrawManager
         $draw = (new Draw())
             ->setId($drawData['eid'])
             ->setDrawnAt(new \DateTime($drawData['drawn_at']))
-            ->setPublished($drawData['published']);
+            ->setPublished($drawData['published'])
+            ->setAddonValue($drawData['addons'][0]['value']);
 
         foreach ($drawData['results'] as $result) {
              $draw->addBall($this->ballFactory->createBall($result));
